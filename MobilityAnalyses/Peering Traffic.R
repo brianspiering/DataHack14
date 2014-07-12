@@ -1,3 +1,8 @@
+# General setup ----------------------------------------------------------------
+cat("\014")    # Clear console
+rm(list=ls())  # Delete all variables
+graphics.off() # Close all open plots
+
 # Load data -----------
 base_path <- "~/Documents/DataHack14/"
 folder <- "Saturday_Data/" # "Tuesday_Data/" # 
@@ -10,7 +15,7 @@ Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES <- as.numeric(Mobility_Sign
 Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES <- as.numeric(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES)
 
 # Explore data -----
-View(Mobility_Signaling_Peering_Traffic)
+# View(Mobility_Signaling_Peering_Traffic)
 head(Mobility_Signaling_Peering_Traffic)
 str(Mobility_Signaling_Peering_Traffic)
 
@@ -31,10 +36,16 @@ sum(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES)
 aggregate(Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID)
 
 str(Mobility_Signaling_Peering_Traffic)
-aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
+aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID,
+         data = Mobility_Signaling_Peering_Traffic,
+         FUN=sum)
 
-OUTBOUND<-aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
-INBOUND<-aggregate(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
+OUTBOUND <- aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID,
+                      data = Mobility_Signaling_Peering_Traffic,
+                      FUN=sum)
+INBOUND <- aggregate(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID,
+                     data = Mobility_Signaling_Peering_Traffic,
+                     FUN=sum)
 
 OUTBOUND <-  OUTBOUND[order(OUTBOUND[,2], decreasing=TRUE),]
 OUTBOUND[1:10,]
