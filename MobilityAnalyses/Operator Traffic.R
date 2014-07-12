@@ -1,4 +1,9 @@
-Mobility_Signaling_Operator_Traffic <- read.csv("/Volumes/Windows/DataHack14/VivekAnalyses/Data Samples/Mobility_Signaling_Operator_Traffic.csv")
+
+path <- "/Volumes/Windows/DataHack14/VivekAnalyses/Data Samples/"
+filename <- "Mobility_Signaling_Operator_Traffic.csv"
+end_point <- paste(path, filename, sep="")
+
+Mobility_Signaling_Operator_Traffic <- read.csv(end_point)
 str(Mobility_Signaling_Operator_Traffic)
 
 #200 obs, 9 vars
