@@ -72,13 +72,36 @@ orig_country<- "UNITED STATES"
 dest_country <- "BRAZIL"
 
 
-both_country <- subset(Mobility_Signaling_Peering_Traffic, Mobility_Signaling_Peering_Traffic$DESTINATION_COUNTRY == dest_country & Mobility_Signaling_Peering_Traffic$ORIGINATION_COUNTRY == orig_country)
+both_country <- subset(Mobility_Signaling_Peering_Traffic, 
+                       Mobility_Signaling_Peering_Traffic$DESTINATION_COUNTRY == dest_country & 
+                         Mobility_Signaling_Peering_Traffic$ORIGINATION_COUNTRY == orig_country)
 
-str(both_country)
-length(unique(both_country$PEERING_CUSTOMER_ID))
+#str(both_country)
+#length(unique(both_country$PEERING_CUSTOMER_ID))
 
 
+agg_outbound <- aggregate(both_country$OUTBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,
+          data = both_country,
+          FUN=sum)
 
+agg_inbound <- aggregate(both_country$INBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,
+                          data = both_country,
+                          FUN=sum)
+
+
+agg_outbound <-  agg_outbound[order(agg_outbound[,2], decreasing=TRUE),]
+agg_outbound[1:10,]
+
+agg_inbound <-  agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]
+agg_inbound[1:10,]
+
+
+name <- paste(orig_country, dest_country)
+
+filename_out <- paste(name, "outbound.csv")
+filename_in <- paste(name, "inbound.csv")
+
+write.table(agg_outbound, file= filename_out)
 
 
 # Save summary data ---
