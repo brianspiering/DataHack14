@@ -6,6 +6,9 @@ suffix <- ".csv"
 end_point_in <- paste(base_path, folder, file_name, suffix, sep="")
 Mobility_Signaling_Peering_Traffic <- read.csv(end_point_in)
 
+Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES <- as.numeric(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES)
+Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES <- as.numeric(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES)
+
 # Explore data -----
 View(Mobility_Signaling_Peering_Traffic)
 head(Mobility_Signaling_Peering_Traffic)
