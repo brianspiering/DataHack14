@@ -20,7 +20,6 @@ cat("\014")    # Clear console
 rm(list=ls())  # Delete all variables
 graphics.off() # Close all open plots
 
-
 # Code Block -------------------------------------------------------------------
 # TODO: Add code
 
