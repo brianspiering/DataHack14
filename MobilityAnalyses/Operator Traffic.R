@@ -1,4 +1,5 @@
 
+# Operator traffic is not that interesting.
 path <- "/Volumes/Windows/DataHack14/VivekAnalyses/Data Samples/"
 filename <- "Mobility_Signaling_Operator_Traffic.csv"
 end_point <- paste(path, filename, sep="")
