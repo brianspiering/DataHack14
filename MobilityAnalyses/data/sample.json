@@ -1,0 +1,9 @@
+{"event": "World Cup",
+ "company": "Facebook",
+ "home_country": "United States",
+ "visiting_country": "Brazil",
+ "team_members":
+    [{"cust_id": 1001, "data_used": 1001},
+    {"cust_id": 1002, "data_used": 1002}
+    ]
+}
