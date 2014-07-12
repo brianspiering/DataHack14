@@ -35,8 +35,8 @@ sum(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES)
 
 str(Mobility_Signaling_Peering_Traffic)
 aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID,
-         data = Mobility_Signaling_Peering_Traffic,
-         FUN=sum)
+          data = Mobility_Signaling_Peering_Traffic,
+          FUN=sum)
 
 OUTBOUND <- aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID,
                       data = Mobility_Signaling_Peering_Traffic,
@@ -79,23 +79,12 @@ both_country <- subset(Mobility_Signaling_Peering_Traffic, Mobility_Signaling_Pe
 
 
 agg_outbound <- aggregate(both_country$OUTBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,
-          data = both_country,
-          FUN=sum)
-
-agg_inbound <- aggregate(both_country$INBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,
                           data = both_country,
                           FUN=sum)
 
-
-agg_outbound <-  agg_outbound[order(agg_outbound[,2], decreasing=TRUE),]
-agg_outbound[1:10,]
-
-agg_inbound <-  agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]
-agg_inbound[1:10,]
-
-
-topCustomersOut <- OUTBOUND[1:10,][1]
-
+agg_inbound <- aggregate(both_country$INBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,
+                         data = both_country,
+                         FUN=sum)
 
 # Save summary data ---
 end_point_out <- paste(base_path, folder, file_name, "_summary", suffix, sep="")
