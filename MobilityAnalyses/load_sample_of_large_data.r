@@ -1,10 +1,11 @@
 base_path <- "~/Documents/DataHack14/"
 folder <- "Saturday_Data/" # "Tuesday_Data/" # 
-file_name <- "Mobility_Signaling_Peering_Traffic"
+file_name <- "Mobility_Signaling_Operator_Traffic" #"Mobility_Signaling_Peering_Traffic"
 suffix <- ".csv"
 end_point_in <- paste(base_path, folder, file_name, suffix, sep="")
 end_point_out <- paste(base_path, folder, file_name, "subsample", suffix, sep="")
 
+cat(file_name, "\n")
 file_in <- file(end_point_in,"r")
 file_out <- file(end_point_out,"a")
 
