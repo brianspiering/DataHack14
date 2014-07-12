@@ -33,7 +33,6 @@ subset(Mobility_Signaling_Peering_Traffic, Mobility_Signaling_Peering_Traffic$PE
 Mobility_Signaling_Peering_Traffic
 sum(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES)
 sum(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES)
-aggregate(Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID)
 
 str(Mobility_Signaling_Peering_Traffic)
 aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID,
