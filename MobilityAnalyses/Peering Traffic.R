@@ -1,24 +1,25 @@
-Mobility_Signaling_Peering_Traffic <- read.csv("~/Dropbox/data hack/Data Samples/Mobility_Signaling_Peering_Traffic.csv")
+# Load data -----------
+base_path <- "~/Documents/DataHack14/"
+folder <- "Saturday_Data/" # "Tuesday_Data/" # 
+file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
+suffix <- ".csv"
+end_point_in <- paste(base_path, folder, file_name, suffix, sep="")
+Mobility_Signaling_Peering_Traffic <- read.csv(end_point_in)
 
+# Explore data -----
 View(Mobility_Signaling_Peering_Traffic)
-
-Mobility_Signaling_Peering_Traffic
-
 head(Mobility_Signaling_Peering_Traffic)
 str(Mobility_Signaling_Peering_Traffic)
 
+# Analyze customers -----------
 #41 different peering customers.
 table(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES)
 hist(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES)
 head(Mobility_Signaling_Peering_Traffic)
-
 table(Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID)
-
-
 str(Mobility_Signaling_Peering_Traffic)
-#100 obs
-#41 diff customers
 
+# Analyze single customer -------------
 subset(Mobility_Signaling_Peering_Traffic, Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID == "iBN0")
 
 Mobility_Signaling_Peering_Traffic
@@ -43,3 +44,6 @@ INBOUND <- INBOUND[order(INBOUND[,2], decreasing=TRUE),]
 INBOUND[1:10,]
 topCustomersIn <- INBOUND[1:10,][1]
 topCustomersIn
+
+# Save summary data ---
+end_point_out <- paste(base_path, folder, file_name, "_summary", suffix, sep="")
