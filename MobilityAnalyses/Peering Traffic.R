@@ -31,10 +31,7 @@ str(Mobility_Signaling_Peering_Traffic)
 aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
 
 OUTBOUND<-aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
-
-
 INBOUND<-aggregate(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
-
 
 OUTBOUND <-  OUTBOUND[order(OUTBOUND[,2], decreasing=TRUE),]
 OUTBOUND[1:10,]
