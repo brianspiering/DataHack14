@@ -13,7 +13,15 @@ cat("\014")    # Clear console
 rm(list=ls())  # Delete all variables
 graphics.off() # Close all open plots
 
-# Save table to json -----------------------------------------------------------
+# Load R object ----------------------------------------------------------------
+path <- "./data/"
+filename <- "event_data.rdata"
+end_point <- paste(path, filename, sep="")
+data_current <- load(end_point)
+
+# Data transform ---------------------------------------------------------------
+
+# Save data to json -----------------------------------------------------------
 table_data <- table(round(runif(100, 1, 5))) # Mock data
 sink("temp.json")
 cat(toJSON(table_data))
