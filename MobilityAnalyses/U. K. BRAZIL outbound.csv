@@ -1,11 +1,11 @@
-"both_country$PEERING_CUSTOMER_ID" "both_country$OUTBOUND_MESSAGES"
-"9" "iZO7" 625975
-"1" "i5BE" 47003
-"6" "iLE0" 46090
-"5" "iEOM" 7
-"4" "iAMT" 1
-"2" "i8BV" 0
-"3" "i8MV" 0
-"7" "iWVB" 0
-"8" "iYWA" 0
-"10" "iZTV" 0
+"both_country$PEERING_CUSTOMER_ID","both_country$OUTBOUND_MESSAGES"
+"iZO7",625975
+"i5BE",47003
+"iLE0",46090
+"iEOM",7
+"iAMT",1
+"i8BV",0
+"i8MV",0
+"iWVB",0
+"iYWA",0
+"iZTV",0
