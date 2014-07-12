@@ -5,7 +5,7 @@ end_point <- paste(path, filename, sep="")
 
 Mobility_Signaling_Operator_Traffic <- read.csv(end_point)
 str(Mobility_Signaling_Operator_Traffic)
-
+View(Mobility_Signaling_Operator_Traffic)
 #200 obs, 9 vars
 head(Mobility_Signaling_Operator_Traffic)
 str(Mobility_Signaling_Operator_Traffic$ORIGINATION_NETWORK_ID)
