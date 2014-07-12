@@ -29,20 +29,17 @@ aggregate(Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID)
 str(Mobility_Signaling_Peering_Traffic)
 aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
 
-OUTBOUND<-aggregate(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
+OUTBOUND<-aggregate(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
 
 
 INBOUND<-aggregate(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES ~ Mobility_Signaling_Peering_Traffic$PEERING_CUSTOMER_ID, data = Mobility_Signaling_Peering_Traffic, FUN=sum)
 
-OUTBOUND
-str(OUTBOUND)
 
+OUTBOUND <-  OUTBOUND[order(OUTBOUND[,2], decreasing=TRUE),]
+OUTBOUND[1:10,]
+topCustomersOut <- OUTBOUND[1:10,][1]
 
-attach(OUTBOUND)
-detach(OUTBOUND)
-
-
-OUTBOUND[,order(OUTBOUND$Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES)]
-
-
-INBOUND
+INBOUND <- INBOUND[order(INBOUND[,2], decreasing=TRUE),]
+INBOUND[1:10,]
+topCustomersIn <- INBOUND[1:10,][1]
+topCustomersIn
