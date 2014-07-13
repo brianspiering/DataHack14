@@ -11,7 +11,7 @@ dest_country <- "BRAZIL"
 #dest_country <- "BRAZIL"
 
 # Load data -----------
-cat('Loading data ...' \n)
+cat('Loading data...\n')
 base_path <- "~/Documents/DataHack14/"
 folder <- "Saturday_Data/" # "Tuesday_Data/" # 
 file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
@@ -64,4 +64,4 @@ outputAggs <- function(orig_country, dest_country) {
   
 }
 
-
+cat('Output saved.\n')
