@@ -71,21 +71,23 @@ outputAggs <- function(orig_country, dest_country) {
     
   total_data<- sum(both_country$OUTBOUND_MESSAGES)
   json <- numeric()
+
+  data_used <- numeric()
+  
+  k<- nrow(agg_outbound)
+  
+  for(i in 1:k){    
+    element<- list("cust_id" = as.numeric(agg_outbound[,1][i]), "data_used" = agg_outbound[,2][i])
+    data_used <- append(data_used, list(element))  
+  }
+  
+  
   json <- list("event" = "World Cup", "company" = "Facebook",
                "home_country" = orig_country,
                "visiting_country" = dest_country,
-               "total_data" = total_data)
-   
-    data_used <- numeric()
-    
-    k<- nrow(agg_outbound)
-  
-    for(i in 1:k){    
-    element<- list("cust_id" = as.numeric(agg_outbound[,1][i]), "data_used" = agg_outbound[,2][i])
-    data_used <- append(data_used, list(element))  
-    }
+               "total_data" = total_data, "team_members"=list(data_used))   
 
-  json <- append(json, list(data_used))
+  #json <- append(json, list(data_used))
   
   sink("temp.json")
   cat(toJSON(json))
