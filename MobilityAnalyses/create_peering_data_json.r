@@ -83,13 +83,8 @@ outputAggs <- function(orig_country, dest_country) {
   data_used <- numeric()
 
   # Write out data for each customer / company team member
-<<<<<<< HEAD
   for(i in 1:nrow(agg_outbound)){    
     element <- list("cust_id" = as.numeric(agg_outbound[,1][i]), "data_used" = agg_outbound[,2][i])
-=======
-  for(i in 1:nrow(agg_both)){    
-    element<- list("cust_id" = as.numeric(agg_both$customer_id[i]), "data_used" = agg_both$total_messages[i])
->>>>>>> FETCH_HEAD
     data_used <- append(data_used, list(element))  
   }
   
