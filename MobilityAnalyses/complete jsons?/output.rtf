@@ -4,7 +4,78 @@
 \margl1440\margr1440\vieww10800\viewh8400\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
 
-\f0\fs24 \cf0 Calculating sums & counts (aka doin' data science) \
+\f0\fs24 \cf0 Number of rows: 166832712 \
+> \
+> # Convert dataframe numeric --------------------\
+> Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES <- as.numeric(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES)\
+> Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES <- as.numeric(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES)\
+> \
+> # Define aggregate function-----------\
+> outputAggs <- function(company, orig_country, dest_country, file_name) \{\
++   cat("Calculating sums & counts (aka doin' data science) \\n")\
++   both_country <- subset(Mobility_Signaling_Peering_Traffic, \
++                          Mobility_Signaling_Peering_Traffic$DESTINATION_COUNTRY == dest_country \
++                          & Mobility_Signaling_Peering_Traffic$ORIGINATION_COUNTRY == orig_country)\
++   \
++   agg_outbound <- aggregate(both_country$OUTBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,\
++                             data = both_country,\
++                             FUN=sum)\
++   \
++   agg_inbound <- aggregate(both_country$INBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,\
++                            data = both_country,\
++                            FUN=sum)\
++   \
++   agg_outbound <-  agg_outbound[order(agg_outbound[,2], decreasing=TRUE),]\
++   #agg_outbound[1:10,]\
++   \
++   agg_inbound <- agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]\
++   print(agg_inbound)\
++   #agg_inbound[1:10,]\
++ \
++   names(agg_outbound) <- c("customer_id", "outbound_messages")\
++   names(agg_inbound)<- c("customer_id", "inbound_messages")\
++   \
++   agg_both <-merge(agg_outbound, agg_inbound, by= "customer_id")\
++   # Save data to json -----------------------------------------------------------\
++   \
++   agg_both$total_messages <- agg_both$inbound_messages + agg_both$outbound_messages\
++   total_data <- sum(agg_both$total_messages)\
++ \
++   # Define new variables\
++   json <- numeric()\
++   data_used <- numeric()\
++ \
++   # Write out data for each customer / company team member\
++   for(i in 1:nrow(agg_outbound))\{    \
++     element <- list("cust_id" = as.numeric(agg_outbound[,1][i]), "data_used" = agg_outbound[,2][i])\
++     data_used <- append(data_used, list(element))  \
++   \}\
++   \
++   # Create complete json object\
++   json <- list("event" = "World Cup", "company" = company,\
++                "home_country" = orig_country,\
++                "visiting_country" = dest_country,\
++                "total_data" = total_data, "team_members"=data_used)  \
++   \
++   # Define output file path  \
++   path = "./data/"\
++   suffix = ".json"\
++   end_point_out <- paste(path, file_name, suffix, sep="")\
++   \
++   # Write file\
++   sink(end_point_out)\
++   cat(toJSON(json))\
++   sink()\
++   cat("JSON filed saved.") \
++ \}\
+> \
+> # 1st json ------------------\
+> company = "WPP"\
+> orig_country <- "U. K."\
+> dest_country <- "BRAZIL"\
+> file_name <- "sample_data_001"\
+> outputAggs(company, orig_country, dest_country, file_name)\
+Calculating sums & counts (aka doin' data science) \
    both_country$PEERING_CUSTOMER_ID both_country$INBOUND_MESSAGES\
 6                              iBN0                      17471184\
 8                              iLE0                      17392320\
@@ -59,4 +130,5 @@ Calculating sums & counts (aka doin' data science) \
 7                              iEOM                             0\
 12                             iWVA                             0\
 13                             iWVB                             0\
-JSON filed saved.}
+JSON filed saved.\
+> }
