@@ -17,19 +17,18 @@ graphics.off() # Close all open plots
 cat('Loading data...\n')
 
 # Local box vs AWS
-if (version$os =="darwin10.8.0") {
+if (version$os == "darwin10.8.0") {
   # Local
   base_path <- "~/Documents/DataHack14/"
   folder <- "Saturday_Data/"
   file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
-} else if ("linux-gnu"){
+} else if (version$os == "linux-gnu"){
   # Remote 
   dir.create("data") # make output dir
   base_path <- ""
   folder <- ""
   file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
-  cat("TODO: Complete dataset")
-
+  cat("TODO: Use Complete dataset")
 }
 
 suffix <- ".csv"
@@ -64,7 +63,7 @@ outputAggs <- function(company, orig_country, dest_country, file_name) {
   agg_inbound <- agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]
   print(agg_inbound)
   #agg_inbound[1:10,]
-
+  
   names(agg_outbound) <- c("customer_id", "outbound_messages")
   names(agg_inbound)<- c("customer_id", "inbound_messages")
   
@@ -73,11 +72,11 @@ outputAggs <- function(company, orig_country, dest_country, file_name) {
   
   agg_both$total_messages <- agg_both$inbound_messages + agg_both$outbound_messages
   total_data <- sum(agg_both$total_messages)
-
+  
   # Define new variables
   json <- numeric()
   data_used <- numeric()
-
+  
   # Write out data for each customer / company team member
   for(i in 1:nrow(agg_outbound)){    
     element <- list("cust_id" = as.numeric(agg_outbound[,1][i]), "data_used" = agg_outbound[,2][i])
