@@ -36,13 +36,12 @@ if (version$os =="darwin10.8.0") {
   file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
 }
 
-
 suffix <- ".csv"
 end_point_in <- paste(base_path, folder, file_name, suffix, sep="")
 Mobility_Signaling_Peering_Traffic <- read.csv(end_point_in)
 
 # str(Mobility_Signaling_Peering_Traffic) # Look at data
-cat("Number of rows:", nrow(Mobility_Signaling_Peering_Traffic))
+cat("Number of rows:", nrow(Mobility_Signaling_Peering_Traffic), "\n")
 
 # Convert dataframe numeric --------------------
 Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES <- as.numeric(Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES)
@@ -66,54 +65,41 @@ outputAggs <- function(orig_country, dest_country) {
   #agg_outbound[1:10,]
   
   agg_inbound <- agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]
+  print(agg_inbound)
   #agg_inbound[1:10,]
   
   # Save data to json -----------------------------------------------------------
-  #table_data <- table(round(runif(100, 1, 5))) # Mock data
   table_data <- table("event", "World Cup")
   table_data <- table(agg_inbound)
-    
-  total_data<- sum(both_country$OUTBOUND_MESSAGES)
-  json <- numeric()
+  total_data <- sum(both_country$OUTBOUND_MESSAGES)
 
+  # Define new variables
+  json <- numeric()
   data_used <- numeric()
-  
-  k<- nrow(agg_outbound)
-  
-  for(i in 1:k){    
+
+  # Write out data for each customer / company team member
+  for(i in 1:nrow(agg_outbound)){    
     element<- list("cust_id" = as.numeric(agg_outbound[,1][i]), "data_used" = agg_outbound[,2][i])
     data_used <- append(data_used, list(element))  
   }
   
-  
+  # Create complete json object
   json <- list("event" = "World Cup", "company" = "Facebook",
                "home_country" = orig_country,
                "visiting_country" = dest_country,
                "total_data" = total_data, "team_members"=list(data_used))   
-
-  #json <- append(json, list(data_used))
   
+  # Define output file path  
+  path = "./data/"
+  file_name <- "sample_data_001"
+  suffix = ".json"
+  end_point_out <- paste(path, file_name, suffix, sep="")
   
-  
-  #end_point_in <- paste(path, "in",name, type, sep="")
-  
-  base_path <- "~/Documents/DataHack14/"
-  folder <- "Saturday_Data/" # "Tuesday_Data/" # 
-  file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
-  suffix <- ".csv"
-  end_point_in <- paste(base_path, folder, file_name, suffix, sep="")
-  
-  
-  path = ""
-  type = ".json"
-  end_point_out <- paste(path, "out",orig_country,dest_country,type, sep="")
-
-  
+  # Write file
   sink(end_point_out)
   cat(toJSON(json))
   sink()
-  
-  
+  cat("JSON filed saved.") 
 }
 
 outputAggs(orig_country, dest_country)
