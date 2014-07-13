@@ -24,41 +24,46 @@ dest_country <- "BRAZIL"
 
 outputAggs <- function(orig_country, dest_country)
 {
-both_country <- subset(Mobility_Signaling_Peering_Traffic, 
-                       Mobility_Signaling_Peering_Traffic$DESTINATION_COUNTRY == dest_country 
-                       & Mobility_Signaling_Peering_Traffic$ORIGINATION_COUNTRY == orig_country)
+  both_country <- subset(Mobility_Signaling_Peering_Traffic, 
+                         Mobility_Signaling_Peering_Traffic$DESTINATION_COUNTRY == dest_country 
+                         & Mobility_Signaling_Peering_Traffic$ORIGINATION_COUNTRY == orig_country)
+  
+  #str(both_country)
+  #length(unique(both_country$PEERING_CUSTOMER_ID))
+  
+  
+  agg_outbound <- aggregate(both_country$OUTBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,
+                            data = both_country,
+                            FUN=sum)
+  
+  agg_inbound <- aggregate(both_country$INBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,
+                           data = both_country,
+                           FUN=sum)
+  
+  
+  
+  
+  agg_outbound <-  agg_outbound[order(agg_outbound[,2], decreasing=TRUE),]
+  #agg_outbound[1:10,]
+  
+  
+  agg_inbound <- agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]
+  #agg_inbound[1:10,]
+  
+  
+  
+  # Load R object ----------------------------------------------------------------
+  path <- "./data/"
+  name <- paste(orig_country, dest_country)  
+  type <- ".rdata"
+  
+  end_point_in <- paste(path, "in",name, type, sep="")
+  end_point_out <- paste(path, "out",name, type, sep="")
+  
+  saveRDS(agg_inbound, end_point_in)
+  saveRDS(agg_outbound, end_point_out)
+  
 
-#str(both_country)
-#length(unique(both_country$PEERING_CUSTOMER_ID))
-
-
-agg_outbound <- aggregate(both_country$OUTBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,
-                          data = both_country,
-                          FUN=sum)
-
-agg_inbound <- aggregate(both_country$INBOUND_MESSAGES ~ both_country$PEERING_CUSTOMER_ID,
-                         data = both_country,
-                         FUN=sum)
-
-
-
-
-agg_outbound <-  agg_outbound[order(agg_outbound[,2], decreasing=TRUE),]
-#agg_outbound[1:10,]
-
-
-agg_inbound <- agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]
-#agg_inbound[1:10,]
-
-
-name <- paste(orig_country, dest_country)
-
-filename_out <- paste(name, "outbound.csv")
-filename_in <- paste(name, "inbound.csv")
-
-write.csv(agg_outbound, file= filename_out, row.names= FALSE)
-
-write.csv(agg_inbound, file= filename_in, row.names = FALSE)
 }
 
 # Save summary data ---
