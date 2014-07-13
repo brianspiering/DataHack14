@@ -49,6 +49,7 @@ Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES <- as.numeric(Mobility_Signa
 
 # Define aggregate function-----------
 outputAggs <- function(orig_country, dest_country) {
+  cat("Calculating sums & counts (aka doin' data science) \n")
   both_country <- subset(Mobility_Signaling_Peering_Traffic, 
                          Mobility_Signaling_Peering_Traffic$DESTINATION_COUNTRY == dest_country 
                          & Mobility_Signaling_Peering_Traffic$ORIGINATION_COUNTRY == orig_country)
@@ -79,7 +80,7 @@ outputAggs <- function(orig_country, dest_country) {
 
   # Write out data for each customer / company team member
   for(i in 1:nrow(agg_outbound)){    
-    element<- list("cust_id" = as.numeric(agg_outbound[,1][i]), "data_used" = agg_outbound[,2][i])
+    element <- list("cust_id" = as.numeric(agg_outbound[,1][i]), "data_used" = agg_outbound[,2][i])
     data_used <- append(data_used, list(element))  
   }
   
@@ -87,7 +88,7 @@ outputAggs <- function(orig_country, dest_country) {
   json <- list("event" = "World Cup", "company" = "Facebook",
                "home_country" = orig_country,
                "visiting_country" = dest_country,
-               "total_data" = total_data, "team_members"=list(data_used))   
+               "total_data" = total_data, "team_members"=data_used)  
   
   # Define output file path  
   path = "./data/"
