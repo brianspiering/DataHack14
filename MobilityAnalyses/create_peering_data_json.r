@@ -89,12 +89,25 @@ outputAggs <- function(orig_country, dest_country) {
 
   #json <- append(json, list(data_used))
   
-  sink("temp.json")
-  cat(toJSON(json))
-  sink()
+  
   
   #end_point_in <- paste(path, "in",name, type, sep="")
-  #end_point_out <- paste(path, "out",name, type, sep="")
+  
+  base_path <- "~/Documents/DataHack14/"
+  folder <- "Saturday_Data/" # "Tuesday_Data/" # 
+  file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
+  suffix <- ".csv"
+  end_point_in <- paste(base_path, folder, file_name, suffix, sep="")
+  
+  
+  path = ""
+  type = ".json"
+  end_point_out <- paste(path, "out",orig_country,dest_country,type, sep="")
+
+  
+  sink(end_point_out)
+  cat(toJSON(json))
+  sink()
   
   
 }
