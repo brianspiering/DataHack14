@@ -21,7 +21,7 @@ cat("Headers:", headers, "\n")
 writeLines(headers, file_out) # copy headers
 
 # Data ------------------------------------------------------------------
-sample_size <- 100000
+sample_size <- 1000000
 datasample <- readLines(file_in, n=sample_size)
 writeLines(datasample, file_out)
 
