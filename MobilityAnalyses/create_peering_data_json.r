@@ -25,14 +25,18 @@ cat('Loading data...\n')
 
 # Local box vs AWS
 if (version$os =="darwin10.8.0") {
+  # Local
   base_path <- "~/Documents/DataHack14/"
-  folder <- "Saturday_Data/" # "Tuesday_Data/" # 
+  folder <- "Saturday_Data/"
+  file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
 } else if ("linux-gnu"){
+  # Remote 
   base_path <- ""
   folder <- "data/"
+  file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
 }
 
-file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
+
 suffix <- ".csv"
 end_point_in <- paste(base_path, folder, file_name, suffix, sep="")
 Mobility_Signaling_Peering_Traffic <- read.csv(end_point_in)
