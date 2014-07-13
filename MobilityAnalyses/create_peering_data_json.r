@@ -24,12 +24,10 @@ if (version$os =="darwin10.8.0") {
   file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
 } else if ("linux-gnu"){
   # Remote 
-  dir.create("data") # make output dir
   base_path <- ""
-  folder <- ""
+  folder <- "data/"
   file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
   cat("TODO: Complete dataset")
-
 }
 
 suffix <- ".csv"
