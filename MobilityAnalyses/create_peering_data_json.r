@@ -1,3 +1,13 @@
+# List of packages for session
+.packages = c("rjson") 
+
+# Install required CRAN packages (if not already installed)
+.inst <- .packages %in% installed.packages()
+if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
+
+# Load packages into session 
+lapply(.packages, require, character.only=TRUE)
+
 # General setup ----------------------------------------------------------------
 cat("\014")    # Clear console
 rm(list=ls())  # Delete all variables
@@ -46,16 +56,15 @@ outputAggs <- function(orig_country, dest_country) {
   agg_inbound <- agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]
   #agg_inbound[1:10,]
   
-  # Save R object ----------------------------------------------------------------
-  path <- "./data/"
-  name <- paste(orig_country, dest_country)  
-  type <- ".rdata"
+  # Save data to json -----------------------------------------------------------
+  table_data <- table(round(runif(100, 1, 5))) # Mock data
+  sink("temp.json")
+  cat(toJSON(table_data))
+  sink()
   
   end_point_in <- paste(path, "in",name, type, sep="")
   end_point_out <- paste(path, "out",name, type, sep="")
   
-  saveRDS(agg_inbound, end_point_in)
-  saveRDS(agg_outbound, end_point_out)
   
 }
 
