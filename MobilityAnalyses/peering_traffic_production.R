@@ -49,9 +49,7 @@ outputAggs <- function(orig_country, dest_country)
   
   agg_inbound <- agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]
   #agg_inbound[1:10,]
-  
-  
-  
+   
   # Load R object ----------------------------------------------------------------
   path <- "./data/"
   name <- paste(orig_country, dest_country)  
