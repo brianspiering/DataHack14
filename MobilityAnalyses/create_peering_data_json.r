@@ -67,19 +67,23 @@ outputAggs <- function(orig_country, dest_country) {
   agg_inbound <- agg_inbound[order(agg_inbound[,2], decreasing=TRUE),]
   print(agg_inbound)
   #agg_inbound[1:10,]
+
+  names(agg_outbound) <- c("customer_id", "outbound_messages")
+  names(agg_inbound)<- c("customer_id", "inbound_messages")
   
+  agg_both <-merge(agg_outbound, agg_inbound, by= "customer_id")
   # Save data to json -----------------------------------------------------------
-  table_data <- table("event", "World Cup")
-  table_data <- table(agg_inbound)
-  total_data <- sum(both_country$OUTBOUND_MESSAGES)
+  
+  agg_both$total_messages <- agg_both$inbound_messages + agg_both$outbound_messages
+  total_data <- sum(agg_both$total_messages)
 
   # Define new variables
   json <- numeric()
   data_used <- numeric()
 
   # Write out data for each customer / company team member
-  for(i in 1:nrow(agg_outbound)){    
-    element<- list("cust_id" = as.numeric(agg_outbound[,1][i]), "data_used" = agg_outbound[,2][i])
+  for(i in 1:nrow(agg_both)){    
+    element<- list("cust_id" = as.numeric(agg_both$customer_id[i]), "data_used" = agg_both$total_messages[i])
     data_used <- append(data_used, list(element))  
   }
   
