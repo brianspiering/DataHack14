@@ -13,13 +13,6 @@ cat("\014")    # Clear console
 rm(list=ls())  # Delete all variables
 graphics.off() # Close all open plots
 
-# Define variables ---------------------
-orig_country <- "U. K."
-dest_country <- "BRAZIL"
-
-#orig_country<- "UNITED STATES"
-#dest_country <- "BRAZIL"
-
 # Load data -----------
 cat('Loading data...\n')
 
@@ -34,6 +27,7 @@ if (version$os =="darwin10.8.0") {
   base_path <- ""
   folder <- "data/"
   file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
+  cat("TODO: Complete dataset")
 }
 
 suffix <- ".csv"
@@ -48,7 +42,7 @@ Mobility_Signaling_Peering_Traffic$OUTBOUND_MESSAGES <- as.numeric(Mobility_Sign
 Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES <- as.numeric(Mobility_Signaling_Peering_Traffic$INBOUND_MESSAGES)
 
 # Define aggregate function-----------
-outputAggs <- function(orig_country, dest_country) {
+outputAggs <- function(company, orig_country, dest_country, file_name) {
   cat("Calculating sums & counts (aka doin' data science) \n")
   both_country <- subset(Mobility_Signaling_Peering_Traffic, 
                          Mobility_Signaling_Peering_Traffic$DESTINATION_COUNTRY == dest_country 
@@ -89,14 +83,13 @@ outputAggs <- function(orig_country, dest_country) {
   }
   
   # Create complete json object
-  json <- list("event" = "World Cup", "company" = "Facebook",
+  json <- list("event" = "World Cup", "company" = company,
                "home_country" = orig_country,
                "visiting_country" = dest_country,
                "total_data" = total_data, "team_members"=data_used)  
   
   # Define output file path  
   path = "./data/"
-  file_name <- "sample_data_001"
   suffix = ".json"
   end_point_out <- paste(path, file_name, suffix, sep="")
   
@@ -107,4 +100,16 @@ outputAggs <- function(orig_country, dest_country) {
   cat("JSON filed saved.") 
 }
 
-outputAggs(orig_country, dest_country)
+# 1st json ------------------
+company = "WPP"
+orig_country <- "U. K."
+dest_country <- "BRAZIL"
+file_name <- "sample_data_001"
+outputAggs(company, orig_country, dest_country, file_name)
+
+# 2nd json ------------------
+company = "Facebook"
+orig_country<- "UNITED STATES"
+dest_country <- "BRAZIL"
+file_name <- "sample_data_002"
+outputAggs(company, orig_country, dest_country, file_name)
