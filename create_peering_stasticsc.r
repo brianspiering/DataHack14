@@ -47,7 +47,8 @@ data_mobility_peering$INBOUND_MESSAGES <- as.numeric(data_mobility_peering$INBOU
 
 # Define aggregate function-----------
 outputAggs <- function(company, orig_country, dest_country, file_name) {
-  cat("Calculating sums & counts (aka doin' data science) \n")
+  # NOTE: Will throw error "no rows to aggregate" if not enough data
+  cat("Calculating sums & counts (aka doin' data science): \n")
   both_country <- subset(data_mobility_peering, 
                          data_mobility_peering$DESTINATION_COUNTRY == dest_country 
                          & data_mobility_peering$ORIGINATION_COUNTRY == orig_country)
@@ -69,7 +70,7 @@ outputAggs <- function(company, orig_country, dest_country, file_name) {
   agg_both <- merge(agg_outbound, agg_inbound, by= "customer_id")
   agg_both$total_messages <- agg_both$inbound_messages + agg_both$outbound_messages
   total_data <- sum(agg_both$total_messages)
-  print(total_data)
+  
   
   # Define new variables
   data_json <- numeric()
@@ -87,8 +88,10 @@ outputAggs <- function(company, orig_country, dest_country, file_name) {
                     "home_country" = orig_country,
                    "visiting_country" = dest_country,
                    "total_data" = total_data, "team_members"=data_used)  
-  
-  # Define output file path  
+  cat("Output:\n")
+  print(data_json)
+
+# Define output file path  
   path = "./output/"
   suffix = ".json"
   end_point_out <- paste(path, file_name, suffix, sep="")
@@ -101,16 +104,24 @@ outputAggs <- function(company, orig_country, dest_country, file_name) {
 }
 
 # Create json files ------------------------------------------------------------
-# 1st json
-company = "WPP"
-orig_country <- "U. K."
-dest_country <- "BRAZIL"
+# Sample json
+company = "TATA"
+orig_country <- "INDIA"
+dest_country <- "ANTIGUA & BARB"
 file_name <- "sample_output_001"
 outputAggs(company, orig_country, dest_country, file_name)
 
-# 2nd json
-company = "Facebook"
-orig_country<- "UNITED STATES"
-dest_country <- "BRAZIL"
-file_name <- "sample_output_002"
-outputAggs(company, orig_country, dest_country, file_name)
+# Paramters for full datasets
+# # 1st json
+# company = "WPP"
+# orig_country <- "U. K."
+# dest_country <- "BRAZIL"
+# file_name <- "final_output_001"
+# outputAggs(company, orig_country, dest_country, file_name)
+# 
+# # 2nd json
+# company = "Facebook"
+# orig_country<- "UNITED STATES"
+# dest_country <- "BRAZIL"
+# file_name <- "final_output_002"
+# outputAggs(company, orig_country, dest_country, file_name)
