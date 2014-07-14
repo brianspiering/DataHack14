@@ -4,9 +4,9 @@ rm(list=ls())  # Delete all variables
 graphics.off() # Close all open plots
 
 # Load data -----------
-base_path <- "~/Documents/DataHack14/"
-folder <- "Saturday_Data/" # "Tuesday_Data/" # 
-file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
+base_path <- "./"
+folder <- "data/"
+file_name <- "Mobility_Signaling_Peering_Traffic"
 suffix <- ".csv"
 end_point_in <- paste(base_path, folder, file_name, suffix, sep="")
 Mobility_Signaling_Peering_Traffic <- read.csv(end_point_in)

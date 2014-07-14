@@ -1,8 +1,7 @@
 #!/usr/bin/env Rscript
 
 # File description -------------------------------------------------------------
-# Find aggreatate statisics by country
-#
+# Create aggreatate statisics by country
 
 # List of packages for session
 .packages = c("rjson") 
@@ -24,18 +23,15 @@ cat('Loading data...\n')
 
 if (version$os == "darwin10.8.0") {
   # Local - mac
-  base_path <- "~/Documents/DataHack14/"
-  folder <- "Saturday_Data/"
-  file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
-} else if (version$os == "windows"){
-  
+  base_path <- "./"
+  folder <- "data/"
+  file_name <- "Mobility_Signaling_Peering_Traffic"
 } else if (version$os == "linux-gnu"){
   # Remote - aws
   dir.create("output") # make output dir
   base_path <- ""
   folder <- ""
-  file_name <- "Mobility_Signaling_Peering_Traffic_subsample"
-  cat("TODO: Use Complete dataset")
+  file_name <- "Mobility_Signaling_Peering_Traffic"
 }
 
 suffix <- ".csv"
@@ -45,7 +41,7 @@ data_mobility_peering <- read.csv(end_point_in)
 # str(Mobility_Signaling_Peering_Traffic) # Look at data
 cat("Number of rows:", nrow(data_mobility_peering), "\n")
 
-# Convert dataframe numeric --------------------
+# Convert dataframe to numeric --------------------
 data_mobility_peering$OUTBOUND_MESSAGES <- as.numeric(data_mobility_peering$OUTBOUND_MESSAGES)
 data_mobility_peering$INBOUND_MESSAGES <- as.numeric(data_mobility_peering$INBOUND_MESSAGES)
 
@@ -76,7 +72,7 @@ outputAggs <- function(company, orig_country, dest_country, file_name) {
   print(total_data)
   
   # Define new variables
-  json <- numeric()
+  data_json <- numeric()
   data_used <- numeric()
   
   # Write out data for each customer / company team member
@@ -87,10 +83,10 @@ outputAggs <- function(company, orig_country, dest_country, file_name) {
   }
   
   # Create complete json object
-  json <- list("event" = "World Cup", "company" = company,
-               "home_country" = orig_country,
-               "visiting_country" = dest_country,
-               "total_data" = total_data, "team_members"=data_used)  
+  data_json <- list("event" = "World Cup", "company" = company,
+                    "home_country" = orig_country,
+                   "visiting_country" = dest_country,
+                   "total_data" = total_data, "team_members"=data_used)  
   
   # Define output file path  
   path = "./output/"
@@ -99,7 +95,7 @@ outputAggs <- function(company, orig_country, dest_country, file_name) {
   
   # Write file
   sink(end_point_out)
-  cat(toJSON(json))
+  cat(toJSON(data_json))
   sink()
   cat("JSON filed saved.") 
 }
