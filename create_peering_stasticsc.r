@@ -40,6 +40,7 @@ data_mobility_peering <- read.csv(end_point_in)
 
 # str(Mobility_Signaling_Peering_Traffic) # Look at data
 cat("Number of rows:", nrow(data_mobility_peering), "\n")
+if (nrow(data_mobility_peering) < 10000) cat("WARNING: Running analysis on sample data. \n\n")
 
 # Convert dataframe to numeric --------------------
 data_mobility_peering$OUTBOUND_MESSAGES <- as.numeric(data_mobility_peering$OUTBOUND_MESSAGES)
